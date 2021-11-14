@@ -18,62 +18,73 @@ namespace Olympyáda_v_informatike_A_I_1
             int[] tanecnici = Array.ConvertAll(input2.Split(' '), int.Parse);
             int[] zoradenyTanecnici = new int[tanecnici.Length];
             Array.Copy(tanecnici, zoradenyTanecnici, tanecnici.Length);
-            Array.Sort(zoradenyTanecnici);
-            Console.Clear();
-            if (tanecnici[kIndex] == zoradenyTanecnici[kIndex] )
+            Array.Sort(zoradenyTanecnici);            
+            if (tanecnici[kIndex] == zoradenyTanecnici[kIndex])
             {
-                Console.WriteLine("ANO");
-            }
-            else if (tanecnici[kIndex] == zoradenyTanecnici[kIndex])
-            {
-                Console.WriteLine("NIE");
-                return;
-            }
-
-            
-            if (TrebaPostup(ref l) == true)
-            {
-                List<int> kroky = new List<int>();
-                for (int i = 0; i < tanecnici.Length; i++)
-                {
-                 
-
-                    if (tanecnici[i] != zoradenyTanecnici[i])
+                
+                    List<int> kroky = new List<int>();
+                    for (int i = 0; i < tanecnici.Length; i++)
                     {
-                        int indexZoradenehoI = Array.IndexOf(tanecnici, zoradenyTanecnici[i]);
-                        kroky.Add(i+1);
-                        kroky.Add(indexZoradenehoI+1);
-                        for (int figura = 0; figura <= (indexZoradenehoI - i) / 2; figura++ )
+                        if (i == kIndex && tanecnici[kIndex] != zoradenyTanecnici[kIndex])
+                        {
+                            NIE();
+                            return;
+                        }
+                        else
                         {
 
-                            int Temp = tanecnici[i+figura];
-                            tanecnici[i+figura] = tanecnici[indexZoradenehoI-figura];
-                            tanecnici[indexZoradenehoI - figura] = Temp;
+                            if (tanecnici[i] != zoradenyTanecnici[i])
+                            {
+                                int indexZoradenehoI = Array.IndexOf(tanecnici, zoradenyTanecnici[i]);
+                                AddToList(kroky, i, indexZoradenehoI);
 
-                        }                  
+                                for (int figura = 0; figura <= (indexZoradenehoI - i) / 2; figura++)
+                                {
+
+                                    int Temp = tanecnici[i + figura];
+                                    tanecnici[i + figura] = tanecnici[indexZoradenehoI - figura];
+                                    tanecnici[indexZoradenehoI - figura] = Temp;
+
+                                }
+
+                            }
+                            if (tanecnici != zoradenyTanecnici)
+                            {
+                                continue;
+                            }
+                        }
                     }
-                    if (tanecnici != zoradenyTanecnici)
+                    Console.Clear();
+                    Console.WriteLine("ANO");
+
+
+                    if (TrebaPostup(ref l) == true)
                     {
-                        continue;
+                        int[] arrKroky = kroky.ToArray();
+                        int pocetKrokov = arrKroky.Length;
+                        Console.WriteLine(pocetKrokov / 2);
+
+                        for (int g = 0; g < pocetKrokov; g += 2)
+                        {
+
+                            int kroky2 = g + 1;
+                            Console.WriteLine(string.Format("{0} {1}", arrKroky[g], arrKroky[kroky2]));
+
+                        }
                     }
-                }
-                int[] arrKroky = kroky.ToArray();
-                int pocetKrokov = arrKroky.Length / 2;
-                Console.WriteLine(pocetKrokov);
-
-                for (int g = 0; g < pocetKrokov;)
-                {
-                    
-                    int kroky2 = g + 1;
-
-                    Console.WriteLine(string.Format("{0} {1}", kroky[g], kroky[kroky2]));
-                    g++;
-
-                }
+                
             }
-            
-            
-            
+            else
+            {
+                Console.Clear();
+                NIE();
+            }
+
+
+
+
+
+
             static Boolean TrebaPostup(ref int l)
             {
                 if (l == 0)
@@ -88,7 +99,23 @@ namespace Olympyáda_v_informatike_A_I_1
 
         }
 
+        private static void NIE()
+        {
+            Console.WriteLine("NIE");
+        }
 
-
+        private static void AddToList(List<int> kroky, int i, int indexZoradenehoI)
+        {
+            if (i + 1 < indexZoradenehoI + 1)
+            {
+                kroky.Add(i + 1);
+                kroky.Add(indexZoradenehoI + 1);
+            }
+            else
+            {
+                kroky.Add(indexZoradenehoI + 1);
+                kroky.Add(i + 1);
+            }
+        }
     }
 }
