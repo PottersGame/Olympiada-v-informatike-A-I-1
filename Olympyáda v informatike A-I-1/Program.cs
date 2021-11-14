@@ -33,9 +33,7 @@ namespace Olympyáda_v_informatike_A_I_1
 
                         NIE();
                         return;
-                    }
-                    
-                    
+                    }                    
                     else
                     {
                         if (tanecnici[i] != zoradenyTanecnici[i])
@@ -47,7 +45,11 @@ namespace Olympyáda_v_informatike_A_I_1
                                 int Temp = tanecnici[i + figura];
                                 tanecnici[i + figura] = tanecnici[indexZoradenehoI - figura];
                                 tanecnici[indexZoradenehoI - figura] = Temp;
+                                if (!Enumerable.SequenceEqual(tanecnici, zoradenyTanecnici) )
+                                {
+                                    i = 0;
 
+                                }
                                 executedKrok = true;
                             }
                             if (i < indexZoradenehoI && executedKrok == true)
@@ -64,11 +66,9 @@ namespace Olympyáda_v_informatike_A_I_1
                             }
 
                         }
+                        
                     }
-                    if (tanecnici != zoradenyTanecnici && i == tanecnici.Length)
-                    {
-                        i = 0;
-                    }
+                   
 
                 }
                 Console.Clear();
@@ -83,10 +83,10 @@ namespace Olympyáda_v_informatike_A_I_1
 
                         int kroky2 = g + 1;
                         Console.WriteLine(string.Format("{0} {1}", kroky[g], kroky[kroky2]));
-
+                        
 
                     }
-
+                    System.Threading.Thread.Sleep(1000);
 
                 }
             }
@@ -94,6 +94,8 @@ namespace Olympyáda_v_informatike_A_I_1
             {
                 Console.Clear();
                 NIE();
+                System.Threading.Thread.Sleep(1000);
+
             }
 
 
